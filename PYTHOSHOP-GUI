@@ -2,7 +2,7 @@ import os
 from tkinter import *
 from tkinter import messagebox
 from tkinter.filedialog import *
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageFilter
 
 def open_pic():
     global file_name,imgtk,img,file_extension
@@ -41,6 +41,55 @@ def save_as():
     give_name.place(x=35,y=50)
     save_button = Button(toplevel,text ="Save as...",command= lambda:[img.save(give_name.get()+file_extension),destroy_widget(toplevel),messagebox.showinfo("Save", "Save completed")])
     save_button.place(x=65,y=100)
+    
+def black_n_white_filter():
+    global img
+    img = img.convert("L")
+    reload_pic(img)
+    messagebox.showinfo("black & white", "filter added")
+    
+def blur_filter():
+    global img
+    img = img.filter(ImageFilter.BLUR)
+    reload_pic(img)
+    messagebox.showinfo("blur", "filter added")
+
+def contour_filter():
+    global img
+    img = img.filter(ImageFilter.CONTOUR)
+    reload_pic(img)
+    messagebox.showinfo("contour", "filter added")
+
+def edge_enhance_more_filter():
+    global img
+    img = img.filter(ImageFilter.EDGE_ENHANCE_MORE)
+    reload_pic(img)
+    messagebox.showinfo("edge enhance", "filter added")
+
+def emboss_filter():
+    global img
+    img = img.filter(ImageFilter.EMBOSS)
+    reload_pic(img)
+    messagebox.showinfo("emboss", "filter added")
+
+def find_edges_filter():
+    global img
+    img = img.filter(ImageFilter.FIND_EDGES)
+    reload_pic(img)
+    messagebox.showinfo("find edges", "filter added")
+
+def sharpen_filter():
+    global img
+    img = img.filter(ImageFilter.SHARPEN)
+    reload_pic(img)
+    messagebox.showinfo("sharpen", "filter added")
+
+def smooth_more_filter():
+    global img
+    img = img.filter(ImageFilter.SMOOTH_MORE)
+    reload_pic(img)
+    messagebox.showinfo("smooth more", "filter added")
+
 
 
 #Przy dodawaniu funkcji przerabiających obraz trzeba wczytać globalną  zmienną, którą chcemy zmieniać (jako global nazwa_zmiennej). Dla samego użycia  nie trzeba wczytywać jej do funkcji
@@ -65,6 +114,17 @@ filemenu.add_command(label="Open", command=open_pic)
 filemenu.add_command(label="Save", command=lambda:save(file_name))
 filemenu.add_command(label="Save as...", command=save_as)
 
+filters_Menu = Menu(menubar, tearoff=0)
+filters_Menu.add_command(label="black & white", command=black_n_white_filter)
+filters_Menu.add_command(label="blur", command=blur_filter)
+filters_Menu.add_command(label="contour", command=contour_filter)
+filters_Menu.add_command(label="edge enhance", command=edge_enhance_more_filter)
+filters_Menu.add_command(label="emboss", command=emboss_filter)
+filters_Menu.add_command(label="find edges", command=find_edges_filter)
+filters_Menu.add_command(label="sharpen", command=sharpen_filter)
+filters_Menu.add_command(label="smooth", command=smooth_more_filter)
+menubar.add_cascade(label="Filters", menu=filters_Menu)
+ 
 menubar.add_command(label="Exit", command=main_window.quit)
 
 main_window.config(menu=menubar)

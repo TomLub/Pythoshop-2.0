@@ -1,0 +1,71 @@
+import os
+from tkinter import *
+from tkinter import messagebox
+from tkinter.filedialog import *
+from PIL import Image, ImageTk
+
+def open_pic():
+    global file_name,imgtk,img,file_extension
+    file_name, file_extension = os.path.splitext(askopenfilename())
+    img=Image.open(file_name+file_extension)
+    imgtk=ImageTk.PhotoImage(img)
+    show_pic(imgtk)
+
+def show_pic(filetk):    #Ta funkcja wyświetla obraz klasy ImageTk jako Label.
+    global label
+    label = Label(image=filetk)
+    label.image = filetk
+    label.pack()
+
+def destroy_widget(widget):
+    widget.destroy()
+
+def reload_pic(file):    #Ta funkcja usuwa wyświetlony obrazek i wyświetla nowy, obrobiony zamiast niego.
+    global label,imgtk
+    label.destroy()
+    imgtk=ImageTk.PhotoImage(file)
+    show_pic(imgtk)
+
+def save(name):
+    global img
+    img.save(name+file_extension)
+    messagebox.showinfo("Save", "Save completed")
+
+def save_as():
+    global img
+    toplevel=Toplevel(height=150,width=200)
+    toplevel.title("Choose a name")
+    description=Label(toplevel,text="Write a name of the file:")
+    description.place(x=35,y=0)
+    give_name=Entry(toplevel)
+    give_name.place(x=35,y=50)
+    save_button = Button(toplevel,text ="Save as...",command= lambda:[img.save(give_name.get()+file_extension),destroy_widget(toplevel),messagebox.showinfo("Save", "Save completed")])
+    save_button.place(x=65,y=100)
+
+
+#Przy dodawaniu funkcji przerabiających obraz trzeba wczytać globalną  zmienną, którą chcemy zmieniać (jako global nazwa_zmiennej). Dla samego użycia  nie trzeba wczytywać jej do funkcji
+
+
+
+
+
+
+
+
+
+main_window=Tk()
+
+open=Button(main_window, text="Open a file",command=lambda:[open_pic(),destroy_widget(open)])
+open.place(x=60,y=50)
+
+menubar = Menu(main_window)
+filemenu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="File", menu=filemenu)
+filemenu.add_command(label="Open", command=open_pic)
+filemenu.add_command(label="Save", command=lambda:save(file_name))
+filemenu.add_command(label="Save as...", command=save_as)
+
+menubar.add_command(label="Exit", command=main_window.quit)
+
+main_window.config(menu=menubar)
+main_window.mainloop()

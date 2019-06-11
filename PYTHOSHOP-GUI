@@ -90,7 +90,10 @@ def smooth_more_filter():
     reload_pic(img)
     messagebox.showinfo("smooth more", "filter added")
 
-
+def rotate():    #Ta funkcja obraca zdjęcie
+    global img
+    img = img.rotate(90)
+    reload_pic(img)
 
 #Przy dodawaniu funkcji przerabiających obraz trzeba wczytać globalną  zmienną, którą chcemy zmieniać (jako global nazwa_zmiennej). Dla samego użycia  nie trzeba wczytywać jej do funkcji
 
@@ -124,7 +127,8 @@ filters_Menu.add_command(label="find edges", command=find_edges_filter)
 filters_Menu.add_command(label="sharpen", command=sharpen_filter)
 filters_Menu.add_command(label="smooth", command=smooth_more_filter)
 menubar.add_cascade(label="Filters", menu=filters_Menu)
- 
+
+menubar.add_command(label="Rotate", command=rotate)
 menubar.add_command(label="Exit", command=main_window.quit)
 
 main_window.config(menu=menubar)

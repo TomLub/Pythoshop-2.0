@@ -15,5 +15,4 @@ Created with Python 3.7.2
 Required modules are:
 * Pillow
 
-## Running the program
-?
+

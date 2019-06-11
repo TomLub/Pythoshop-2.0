@@ -104,10 +104,11 @@ def rotate():    #Ta funkcja obraca zdjęcie
 
 #Przy dodawaniu funkcji przerabiających obraz trzeba wczytać globalną  zmienną, którą chcemy zmieniać (jako global nazwa_zmiennej). Dla samego użycia  nie trzeba wczytywać jej do funkcji
 
-
-
-
-
+def instasize():   #Funkcja zmieniająca zdjęcie w kwadrat
+    global img
+    img=img.resize((400,400))
+    reload_pic(img)
+    messagebox.showinfo("Done!")
 
 
 
@@ -136,6 +137,12 @@ filters_Menu.add_command(label="smooth", command=smooth_more_filter)
 menubar.add_cascade(label="Filters", menu=filters_Menu)
 
 menubar.add_command(label="Rotate", command=rotate)
+
+resize_Menu=Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Resize", menu=resize_Menu)
+resize_Menu.add_command(label="Instasize", command=instasize)
+
+
 menubar.add_command(label="Exit", command=main_window.quit)
 
 main_window.config(menu=menubar)

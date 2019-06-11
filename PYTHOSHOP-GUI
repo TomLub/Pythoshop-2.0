@@ -112,27 +112,30 @@ def instasize():   #Funkcja zmieniająca zdjęcie w kwadrat
 
 def ownsize():
     global img
-    img=img.resize((height,width))
-    reload_pic(img)
-    messagebox.showinfo("Done!")
 
-    window=Toplevel(height=150,width=200)
+    window=Toplevel(height=300,width=400)
     window.title("Resize")
 
     height=Label(window,text="Height:")
-    height.pack(side=LEFT)
+    height.grid(row=0,column=0)
     p_height=Entry(window)
-    p_height.pack(side=RIGHT)
+    p_height.grid(row=0,column=1)
 
     width=Label(window,text="Width:")
-    width.pack(side=LEFT)
+    width.grid(row=1,column=0)
     p_width=Entry(window)
-    p_width.pack(side=RIGHT)
+    p_width.grid(row=1,column=1)
+    
+    button=Button(window,text="OK",command=ownsize)
+    button.grid(row=2,column=1)
 
-    button=Buttom(window,text="OK",command=ownsize)
-    button.pack(side=BOTTOM)
+    img=img.resize((p_height.get(),p_width.get()))
+    reload_pic(img)
+    messagebox.showinfo("Done!")
 
     window.mainloop()
+
+  
 
 
 

@@ -114,6 +114,36 @@ def instasize():   #Zmienia zdjęcie w kwadrat
     reload_pic(img)
     messagebox.showinfo("Done!")
 
+def ownsize():
+    global img
+    def dimensions(p_height,p_width):
+        global img
+        img=img.resize((p_height.get(),p_width.get()))
+        reload_pic(img)
+        messagebox.showinfo("Done!")
+
+    window=Toplevel(height=300,width=400)
+    window.title("Resize")
+
+    height=Label(window,text="Height:")
+    height.grid(row=0,column=0)
+    p_height=Entry(window)
+    p_height.grid(row=0,column=1)
+
+
+    width=Label(window,text="Width:")
+    width.grid(row=1,column=0)
+    p_width=Entry(window)
+    p_width.grid(row=1,column=1)
+
+    button=Button(window,text="OK",command=dimensions)
+    button.grid(row=2,column=1)
+
+    window.mainloop()
+
+
+  
+
 
 
 
@@ -145,6 +175,7 @@ menubar.add_command(label="Rotate", command=rotate)
 resize_Menu=Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Resize", menu=resize_Menu)
 resize_Menu.add_command(label="Instasize", command=instasize)
+resize_Menu.add_command(label="Your own size",command=ownsize)
 
 
 menubar.add_command(label="Exit", command=main_window.quit)

@@ -4,13 +4,20 @@ from tkinter import messagebox
 from tkinter.filedialog import *
 from PIL import Image, ImageTk, ImageFilter
 
-def open_pic():
-    global file_name,imgtk,img,file_extension
-    file_name, file_extension = os.path.splitext(askopenfilename())
-    img=Image.open(file_name+file_extension)
-    imgtk=ImageTk.PhotoImage(img)
-    show_pic(imgtk)
-
+def open_pic(open):
+    try:
+        global file_name,imgtk,img,file_extension
+        file_name, file_extension = os.path.splitext(askopenfilename())
+        img=Image.open(file_name+file_extension)
+        imgtk=ImageTk.PhotoImage(img)
+        destroy_widget(open)
+        try:
+            reload_pic(img)
+        except NameError:
+            show_pic(imgtk)
+    except AttributeError:
+        pass 
+    
 def show_pic(filetk):    #Ta funkcja wyświetla obraz klasy ImageTk jako Label.
     global label
     label = Label(image=filetk)
@@ -107,13 +114,13 @@ def rotate():    #Ta funkcja obraca zdjęcie
 
 main_window=Tk()
 
-open=Button(main_window, text="Open a file",command=lambda:[open_pic(),destroy_widget(open)])
+open=Button(main_window, text="Open a file",command=lambda:open_pic(open))
 open.place(x=60,y=50)
 
 menubar = Menu(main_window)
 filemenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="File", menu=filemenu)
-filemenu.add_command(label="Open", command=open_pic)
+filemenu.add_command(label="Open", command=lambda:open_pic(open))
 filemenu.add_command(label="Save", command=lambda:save(file_name))
 filemenu.add_command(label="Save as...", command=save_as)
 

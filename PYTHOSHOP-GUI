@@ -53,7 +53,7 @@ def save_as():    #Zapisuje edytowane zdjęcie jako nowy plik.
     save_button = Button(toplevel,text ="Save as...",command= lambda:[img.save(give_name.get()+file_extension),destroy_widget(toplevel),messagebox.showinfo("Save", "Save completed")])
     save_button.place(x=65,y=100)
     
-def black_n_white_filter():    #8 funkcji dodających filtry do zdjęć
+def black_n_white_filter():
     global img
     img = img.convert("L")
     reload_pic(img)
